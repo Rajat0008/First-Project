@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Glassmorphism Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+    }
+
+    .calculator {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: flex;
+      flex-direction: column;
+      width: 320px;
+      max-width: 90vw;
+    }
+
+    .display {
+      height: 60px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      color: white;
+      font-size: 2em;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 10px;
+      overflow-x: auto;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    button {
+      font-size: 1.5em;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    button.operator {
+      color: #ffca28;
+    }
+
+    button.equal {
+      background: #4caf50;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .calculator {
+        width: 280px;
+      }
+
+      button {
+        font-size: 1.2em;
+        padding: 12px;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .calculator {
+        width: 360px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator">
+  <div class="display" id="display">0</div>
+  <div class="buttons">
+    <button onclick="clearDisplay()">C</button>
+    <button onclick="append('%')" class="operator">%</button>
+    <button onclick="backspace()">⌫</button>
+    <button onclick="append('/')" class="operator">÷</button>
+
+    <button onclick="append('7')">7</button>
+    <button onclick="append('8')">8</button>
+    <button onclick="append('9')">9</button>
+    <button onclick="append('*')" class="operator">×</button>
+
+    <button onclick="append('4')">4</button>
+    <button onclick="append('5')">5</button>
+    <button onclick="append('6')">6</button>
+    <button onclick="append('-')" class="operator">−</button>
+
+    <button onclick="append('1')">1</button>
+    <button onclick="append('2')">2</button>
+    <button onclick="append('3')">3</button>
+    <button onclick="append('+')" class="operator">+</button>
+
+    <button onclick="append('0')">0</button>
+    <button onclick="append('.')">.</button>
+    <button onclick="calculate()" class="equal">=</button>
+  </div>
+</div>
+
+<script>
+  const display = document.getElementById('display');
+
+  function append(char) {
+    if (display.innerText === '0') {
+      display.innerText = char;
+    } else {
+      display.innerText += char;
+    }
+  }
+
+  function clearDisplay() {
+    display.innerText = '0';
+  }
+
+  function backspace() {
+    display.innerText = display.innerText.slice(0, -1) || '0';
+  }
+
+  function calculate() {
+    try {
+      display.innerText = eval(display.innerText.replace(/÷/g, '/').replace(/×/g, '*'));
+    } catch {
+      display.innerText = 'Error';
+    }
+  }
+</script>
+
+</body>
+</html>
